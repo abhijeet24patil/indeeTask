@@ -10,7 +10,6 @@
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
       <style> [ng:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none !important; } 
       </style>
-     
       <!-- custom style for display-bar -->
       <style>
          .progress {
@@ -35,97 +34,121 @@
             </div>
          </div>
          <div class="row">
-            <div class="col-lg-3 col-md-3 well">
+            <div class="col-lg-12 col-md-12 well">
                <fieldset>
                   <legend>Input Form</legend>
                   <form  ng-submit="addData()">
-                     <div class="form-group">
-                        <label>IP Address:</label>
-                        <input type="text" ng-model="video.ip" class="form-control" required>
+                     <div class="row">
+                        <div class="col-md-4 col-lg-4">
+                           <div class="form-group">
+                              <label>IP Address:</label>
+                              <input type="text" ng-model="video.ip" class="form-control" required>
+                           </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                           <div class="form-group">
+                              <label>Timestamp:</label>
+                              <input type="text" ng-model="video.timestamp" class="form-control" required>
+                           </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                           <div class="form-group">
+                              <label> Full View?</label>
+                              <select class="form-control" ng-model="video.fullView">
+                                 <option value=1>True</option>
+                                 <option value=0>False</option>
+                              </select>
+                           </div>
+                        </div>
                      </div>
-
-                     <div class="form-group">
-                        <label>Timestamp:</label>
-                        <input type="text" ng-model="video.timestamp" class="form-control" required>
+                     <div class="row">
+                        <div class="col-md-4 col-lg-4">
+                           <div class="form-group">
+                              <label> Length:</label>
+                              <input type="text" ng-model="video.fullLength" class="form-control">
+                           </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                           <div class="form-group">
+                              <label> Ontime:</label>
+                              <input type="text" ng-model="video.ontime" class="form-control">
+                           </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                           <div class="form-group">
+                              <label>Complete:</label>
+                              <input type="text" ng-model="video.complete" class="form-control">
+                           </div>
+                        </div>
                      </div>
-
-                     <div class="form-group">
-                        <label> Full View?</label>
-                        <select class="form-control" ng-model="video.fullView">
-                           <option value=1>True</option>
-                           <option value=0>False</option>
-                        </select>
+                     <div class="row">
+                        <div class="col-md-4 col-lg-4" ng-hide="video.fullView==true">
+                           <div class="form-group">
+                              <label>Seek From</label>
+                              <input type="text" ng-model="video.seek.from" class="form-control" ng-disabled="video.fullView==true" >
+                           </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4" ng-hide="video.fullView==true">
+                           <div class="form-group">
+                              <label>Seek To:</label>
+                              <input type="text" ng-model="video.seek.to" class="form-control" ng-disabled="video.fullView==true">
+                           </div>
+                        </div>
                      </div>
-
-                     <div class="form-group">
-                        <label> Length:</label>
-                        <input type="text" ng-model="video.fullLength" class="form-control">
-                     </div>
-
-                     <div class="form-group">
-                        <label> Ontime:</label>
-                        <input type="text" ng-model="video.ontime" class="form-control">
-                     </div>
-
-                     <div class="form-group">
-                        <label>Complete:</label>
-                        <input type="text" ng-model="video.complete" class="form-control">
-                     </div>
-                     <div class="form-group text-center">
-                          <button type="submit" class="btn btn-success btn-xs">submit</button> <button class="btn btn-warning btn-xs" ng-click="clear()" >Clear</button>
-                     </div>
-
-                  </form>
-               </fieldset>
-            </div>
-
-            <div class="col-lg-9  col-md-9 ">
-            <div class="well">
-            <fieldset>
-            <legend>Most Recent Views</legend>
-               <table class="table table-striped table-hover">
-                  <thead >
-                     <tr>
-                        <th>IP Address</th>
-                        <th>Engagement</th>
-                        <th>Timestamp</th>
-                        <th></th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr ng-repeat="info in ArrinfoData">
-                        <td>{{info.ip}}</td>
-                        <td>
-                           <!-- visible only if fullView = 'true' -->
-                           <span ng-if="info.fullView==true">
-                              <uib-progress >
-                                 <uib-bar  value="100" type="success" class="progress-striped active"><span></span></uib-bar>
-                              </uib-progress>
-                           </span>
-                           <!-- visible only if fullLength = 0 -->
-
-                           <span ng-if="info.fullLength==0">
-                              <uib-progress >
-                                 <uib-bar value="0" type="default" class="progress-striped active"><span></span></uib-bar>
-                              </uib-progress>
-                           </span>
-                           <!-- visible only if seek is present in object -->
-                           <uib-progress ng-if="info.seek">
-                              <uib-bar ng-repeat="bar in info.seek track by $index" value="bar.value" type="{{bar.type}}" class="progress-striped active"><span ng-hide="bar.value < 5"></span></uib-bar>
-                           </uib-progress>
-                        </td>
-                        <td>{{info.timestamp  | date:'medium'}}</td>
-                        <td><button class="btn btn-warning btn-xs" type="submit" ng-click="remove($index)" >Remove</button></td>
-                     </tr>
-                  </tbody>
-               </table>
-               </fieldset>
-               </div>
             </div>
          </div>
-         {{store.products}}
-      </div>
+         <div class="row">
+         <div class="form-group text-center">
+         <button type="submit" class="btn btn-success btn-xs">submit</button> <button class="btn btn-warning btn-xs" ng-click="clear()" >Clear</button>
+         </div>
+         </div>
+         </form>
+         </fieldset>
 
+         <hr>
+         <div class="row">
+            <div class="col-lg-12  col-md-12 well">
+               <fieldset>
+                  <legend>Most Recent Views</legend>
+                  <table class="table table-striped table-hover">
+                     <thead >
+                        <tr>
+                           <th>IP Address</th>
+                           <th style="width:400px;">Engagement</th>
+                           <th>Timestamp</th>
+                           <th></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr ng-repeat="info in ArrinfoData">
+                           <td>{{info.ip}}</td>
+                           <td>
+                              <!-- visible only if fullView = 'true' -->
+                              <span ng-if="info.fullView==true">
+                                 <uib-progress >
+                                    <uib-bar  value="100" type="success" class="progress-striped active"><span></span></uib-bar>
+                                 </uib-progress>
+                              </span>
+                              <!-- visible only if fullLength = 0 -->
+                              <span ng-if="info.fullLength==0">
+                                 <uib-progress >
+                                    <uib-bar value="0" type="default" class="progress-striped active"><span></span></uib-bar>
+                                 </uib-progress>
+                              </span>
+                              <!-- visible only if seek is present in object -->
+                              <uib-progress ng-if="info.seek">
+                                 <uib-bar ng-repeat="bar in info.seek track by $index" value="bar.value" type="{{bar.type}}" class="progress-striped active"><span ng-hide="bar.value < 5"></span></uib-bar>
+                              </uib-progress>
+                           </td>
+                           <td>{{info.timestamp  | date:'medium'}}</td>
+                           <td><button class="btn btn-warning btn-xs" type="submit" ng-click="remove($index)" >Remove</button></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </fieldset>
+            </div>
+         </div>
+      </div>
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular.min.js"></script>
       <script src="libs/ui-bootstrap.min.js"></script>
       <script src="app.js"></script>

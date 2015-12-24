@@ -1,7 +1,6 @@
 angular.module('indeeApp', ["ui.bootstrap"])
     .controller('videoCtrl', function($scope, $http) {
-
-        //data object to store all information
+        //data object to store all informat
         $scope.information = {
             "204.138.240.254": [{
                 "full_length": "160.149",
@@ -105,6 +104,30 @@ angular.module('indeeApp', ["ui.bootstrap"])
             if ($scope.video.fullView == 0) {
                 $scope.video.fullView = false;
             }
+
+            if ($scope.video.seek.from != null && $scope.video.seek.to != null) {
+
+                $scope.sBar = [];
+                //adds viewed part to display-bar with green color
+                $scope.bar = {};
+                $scope.bar["value"] = (parseInt($scope.video.seek.from) / parseInt($scope.video.fullLength)) * 100;
+                $scope.bar["type"] = "success";
+                $scope.sBar.push($scope.bar);
+                $scope.bar = {};
+
+                //adds the seek value to display-bar with grey color
+                $scope.bar["value"] = ((parseInt($scope.video.seek.to) - parseInt($scope.video.seek.from)) / parseInt($scope.video.fullLength)) * 100;
+                $scope.bar["type"] = "default";
+                $scope.sBar.push($scope.bar);
+                $scope.bar = {};
+
+                $scope.bar["value"] = ((parseInt($scope.video.fullLength) - parseInt($scope.video.seek.to)) / parseInt($scope.video.fullLength)) * 100;
+                $scope.bar["type"] = "success";
+                $scope.sBar.push($scope.bar);
+
+                $scope.video['seek'] = $scope.sBar;
+            }
+
             console.log($scope.video);
             $scope.ArrinfoData.push($scope.video);
         }
