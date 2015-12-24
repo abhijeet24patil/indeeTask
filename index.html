@@ -72,7 +72,7 @@
                         <input type="text" ng-model="video.complete" class="form-control">
                      </div>
                      <div class="form-group text-center">
-                          <button type="submit" class="btn btn-success btn-xs">submit</button> <button class="btn btn-danger btn-xs" ng-click="clear()" >Clear</button>
+                          <button type="submit" class="btn btn-success btn-xs">submit</button> <button class="btn btn-warning btn-xs" ng-click="clear()" >Clear</button>
                      </div>
 
                   </form>
@@ -115,7 +115,7 @@
                            </uib-progress>
                         </td>
                         <td>{{info.timestamp  | date:'medium'}}</td>
-                        <td><button class="btn btn-danger btn-xs" type="submit" ng-click="remove($index)" >Remove</button></td>
+                        <td><button class="btn btn-warning btn-xs" type="submit" ng-click="remove($index)" >Remove</button></td>
                      </tr>
                   </tbody>
                </table>
