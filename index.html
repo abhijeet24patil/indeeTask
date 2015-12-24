@@ -35,7 +35,7 @@
             </div>
          </div>
          <div class="row">
-            <div class="col-lg-4  col-md-4 well">
+            <div class="col-lg-3 col-md-3 well">
                <fieldset>
                   <legend>Input Form</legend>
                   <form  ng-submit="addData()">
@@ -64,7 +64,7 @@
 
                      <div class="form-group">
                         <label> Ontime:</label>
-                        <input type="text" ng-model="video.ontime" class="form-control"required>
+                        <input type="text" ng-model="video.ontime" class="form-control">
                      </div>
 
                      <div class="form-group">
@@ -79,7 +79,7 @@
                </fieldset>
             </div>
 
-            <div class="col-lg-8  col-md-8 ">
+            <div class="col-lg-9  col-md-9 ">
             <div class="well">
             <fieldset>
             <legend>Most Recent Views</legend>
@@ -89,6 +89,7 @@
                         <th>IP Address</th>
                         <th>Engagement</th>
                         <th>Timestamp</th>
+                        <th></th>
                      </tr>
                   </thead>
                   <tbody>
@@ -114,6 +115,7 @@
                            </uib-progress>
                         </td>
                         <td>{{info.timestamp  | date:'medium'}}</td>
+                        <td><button class="btn btn-danger btn-xs" type="submit" ng-click="remove($index)" >Remove</button></td>
                      </tr>
                   </tbody>
                </table>
@@ -121,8 +123,9 @@
                </div>
             </div>
          </div>
+         {{store.products}}
       </div>
-      
+
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular.min.js"></script>
       <script src="libs/ui-bootstrap.min.js"></script>
       <script src="app.js"></script>
