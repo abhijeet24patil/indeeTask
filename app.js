@@ -1,5 +1,5 @@
 angular.module('indeeApp', ["ui.bootstrap"])
-    .controller('videoCtrl', function($scope, $http) {
+    .controller('videoCtrl', function($scope, $http, $filter) {
         //data object to store all informat
         $scope.information = {
             "204.138.240.254": [{
@@ -61,9 +61,11 @@ angular.module('indeeApp', ["ui.bootstrap"])
                 $scope.infoData['ontime'] = value[i].ontime;
                 $scope.infoData['complete'] = value[i].complete;
 
+
                 $scope.sBar = [];
                 //if seek is present in object then calculate the seek time and view time.
                 if (value[i].seek != null) {
+                    //console.log(value[i].seek.length);
                     //adds viewed part to display-bar with green color
                     $scope.bar = {};
                     $scope.bar["value"] = (parseInt(value[i].seek[0][0]) / parseInt(value[i].full_length)) * 100;
@@ -87,6 +89,14 @@ angular.module('indeeApp', ["ui.bootstrap"])
                         $scope.sBar.push($scope.bar);
                     };
 
+
+                    //below code is to show the remaining viewed vdieo.Currently, commented as its not in given output image.
+                    // $scope.bar = {};
+                    // $scope.bar["value"] = ((parseInt(value[i].full_length) - parseInt(value[i].seek[(value[i].seek.length-1)][1])) / parseInt(value[i].full_length)) * 100;
+                    // $scope.bar["type"] = "success";
+                    // $scope.sBar.push($scope.bar);
+
+
                     $scope.infoData['seek'] = $scope.sBar;
                 }
 
@@ -98,6 +108,7 @@ angular.module('indeeApp', ["ui.bootstrap"])
 
         // to add data from input form
         $scope.addData = function() {
+
             if ($scope.video.fullView == 1) {
                 $scope.video.fullView = true;
             }
@@ -105,31 +116,33 @@ angular.module('indeeApp', ["ui.bootstrap"])
                 $scope.video.fullView = false;
             }
 
-            if ($scope.video.seek.from != null && $scope.video.seek.to != null) {
+            if ($scope.video.seekFrom != null && $scope.video.seekTo != null) {
 
                 $scope.sBar = [];
                 //adds viewed part to display-bar with green color
                 $scope.bar = {};
-                $scope.bar["value"] = (parseInt($scope.video.seek.from) / parseInt($scope.video.fullLength)) * 100;
+                $scope.bar["value"] = (parseInt($scope.video.seekFrom) / parseInt($scope.video.fullLength)) * 100;
                 $scope.bar["type"] = "success";
                 $scope.sBar.push($scope.bar);
                 $scope.bar = {};
 
                 //adds the seek value to display-bar with grey color
-                $scope.bar["value"] = ((parseInt($scope.video.seek.to) - parseInt($scope.video.seek.from)) / parseInt($scope.video.fullLength)) * 100;
+                $scope.bar["value"] = ((parseInt($scope.video.seekTo) - parseInt($scope.video.seekFrom)) / parseInt($scope.video.fullLength)) * 100;
                 $scope.bar["type"] = "default";
                 $scope.sBar.push($scope.bar);
                 $scope.bar = {};
 
-                $scope.bar["value"] = ((parseInt($scope.video.fullLength) - parseInt($scope.video.seek.to)) / parseInt($scope.video.fullLength)) * 100;
-                $scope.bar["type"] = "success";
-                $scope.sBar.push($scope.bar);
+                //below code is to show the remaining viewed vdieo.Currently, commented as its not in given output image.
+                // $scope.bar["value"] = ((parseInt($scope.video.fullLength) - parseInt($scope.video.seekTo)) / parseInt($scope.video.fullLength)) * 100;
+                // $scope.bar["type"] = "success";
+                // $scope.sBar.push($scope.bar);
 
                 $scope.video['seek'] = $scope.sBar;
             }
 
-            console.log($scope.video);
             $scope.ArrinfoData.push($scope.video);
+            $scope.video = {};
+
         }
 
         //To clear the form fields
