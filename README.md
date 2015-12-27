@@ -1,4 +1,5 @@
 # indeeTask
 video seek, play, viewed representation in angularjs.
-Please run this on localhost if you are using Chrome.
+
+Enter all the details in given form and click on submit button. It will create a new entry in table below the form.
  
