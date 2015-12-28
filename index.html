@@ -14,95 +14,38 @@
    </head>
    <body ng-app="indeeApp">
       <div class="container"ng-controller="videoCtrl">
-         <div class="row">
-            <div class="col-lg-12 text-center">
-               <h1>Video Analytics Representation</h1>
-               <hr>
-            </div>
+      <div class="row">
+         <div class="col-lg-12 text-center">
+            <h1>Video Analytics Representation</h1>
+            <hr>
          </div>
-         <div class="row">
-            <div class="col-lg-12 col-md-12 well">
-               <fieldset>
-                  <legend>Enter The Details</legend>
-                  <form  name="inputForm" ng-submit="addData()">
-                     <div class="row">
-                        <div class="col-md-4 col-lg-4">
-                           <div class="form-group required">
-                              <label class="control-label">IP Address:</label>
-                              <input type="text" ng-model="video.ip" class="form-control" placeholder='xxx.xxx.xxx.xxx'   ng-pattern = "/^(\d{1,3}\.){3}(\d{1,3})$/" name="ip" required>
-                              <span ng-show="inputForm.ip.$dirty && inputForm.ip.$invalid" style="color:red"> This is an invalid IP.</span>
-                           </div>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                           <div class="form-group required">
-                              <label class="control-label">Timestamp:</label>
-                              <input type="date" ng-model="video.timestamp" class="form-control" required>
-                           </div>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                           <div class="form-group required">
-                              <label class="control-label"> Full Viewed?</label>
-                              <select class="form-control" ng-model="video.fullView" required>
-                                 <option value=1>True</option>
-                                 <option value=0>False</option>
-                              </select>
-                           </div>
-                        </div>
+      </div>
+      <div class="row">
+      <div class="col-lg-12 col-md-12 well">
+         <fieldset>
+            <legend>Enter the json Data</legend>
+            <form  name="inputForm" ng-submit="addData()">
+               <div class="row">
+                  <div class="col-md-12 col-lg-12">
+                     <div class="form-group required">
+                        <!-- <label class="control-label">Data In json format</label> -->
+                        <textarea type="text" ng-model="video.info" class="form-control" placeholder='json format'  name="info"  rows="10" required></textarea>
                      </div>
-                     <div class="row">
-                        <div class="col-md-4 col-lg-4">
-                           <div class="form-group required">
-                              <label class="control-label"> Video Length:</label>
-                              <input type="text" ng-model="video.fullLength" class="form-control" required>
-                           </div>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                           <div class="form-group required">
-                              <label class="control-label"> Video On-time:</label>
-                              <input type="text" ng-model="video.ontime" class="form-control" required>
-                           </div>
-                        </div>
-                        <div class="col-md-4 col-lg-4">
-                           <div class="form-group">
-                              <label>Complete:</label>
-                              <input type="text" ng-model="video.complete" class="form-control">
-                           </div>
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div class="col-md-4 col-lg-4" ng-hide="video.fullView==true">
-                              <strong>Please Enter the seek values if any:</strong>
-                        </div>
-                     </div>
-                     <div class="row">
-                        <div class="col-md-4 col-lg-4" ng-hide="video.fullView==true">
-                           <div class="form-group">
-                              <label>Seek From:</label>
-                              <input type="text" ng-model="video.seekFrom" class="form-control" ng-disabled="video.fullView==true" >
-                           </div>
-                        </div>
-                        <div class="col-md-4 col-lg-4" ng-hide="video.fullView==true">
-                           <div class="form-group">
-                              <label>Seek To:</label>
-                              <input type="text" ng-model="video.seekTo" class="form-control" ng-disabled="video.fullView==true">
-                           </div>
-                        </div>
-                     </div>
-            </div>
-         </div>
-         <div class="row">
-         <div class="form-group text-center">
-         <button type="submit" class="btn btn-primary btn-md"><span><i class="fa fa-check-square-o"></i></span> Submit</button> <button class="btn btn-default btn-md" ng-click="clear()" ><span><i class="fa fa-trash-o"></i></span> Clear</button>
-         </div>
-         </div>
-         </form>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="form-group text-center">
+                     <button type="submit" class="btn btn-primary btn-md"><span><i class="fa fa-check-square-o"></i></span> Submit</button> <button class="btn btn-default btn-md" ng-click="clear()" ><span><i class="fa fa-trash-o"></i></span> Clear</button>
+                  </div>
+               </div>
+            </form>
          </fieldset>
          <hr>
          <div class="row">
             <div class="col-lg-12  col-md-12 well table-responsive">
                <fieldset>
                   <legend>Most Recent Views</legend>
-                  <table class="table table-striped table-hover table-bordered">
+                  <table class="table table-striped table-hover">
                      <thead >
                         <tr>
                            <th><span><i class="fa fa-map-marker"></i></span> IP Address</th>
@@ -124,8 +67,8 @@
                                     <uib-bar  value="100" type="success" class="progress-striped active"><span></span></uib-bar>
                                  </uib-progress>
                               </span>
-                              <!-- visible only if fullLength = 0 -->
-                              <span ng-if="info.fullLength !=0 && info.fullView==false && !info.seekFrom && !info.seekTo">
+                              <!-- visible only if seek and fullview no defind and fullLength != 0 -->
+                              <span ng-if="info.fullLength !=0 && info.fullView==null && info.seek==null">
                                  <uib-progress >
                                     <uib-bar value="(info.ontime/info.fullLength)*100" type="success" class="progress-striped active"><span></span></uib-bar>
                                  </uib-progress>
