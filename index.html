@@ -26,11 +26,15 @@
             <legend>Enter the json Data</legend>
             <form  name="inputForm" ng-submit="addData()">
                <div class="row">
-                  <div class="col-md-12 col-lg-12">
+                  <div class="col-md-7 col-lg-7">
                      <div class="form-group required">
                         <!-- <label class="control-label">Data In json format</label> -->
-                        <textarea type="text" ng-model="video.info" class="form-control" placeholder='json format'  name="info"  rows="10" required></textarea>
+                        <textarea type="text" ng-model="video.info" class="form-control" placeholder='json format'  name="info"  rows="13" required></textarea>
                      </div>
+                  </div>
+                  <div class="col-lg-5 col-md-5 well">
+                     <p><b>Example of input data</b></p>
+                    {{sampleData}}
                   </div>
                </div>
                <div class="row">
